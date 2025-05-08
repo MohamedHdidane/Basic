@@ -1,6 +1,0 @@
-{
-    "Payload_Type": ["mythic_agent"],
-    "C2_Profiles": [],
-    "documentation": ["mythic_agent.md"],
-    "exclude": []
-}
