@@ -19,18 +19,19 @@ class LsArguments(TaskArguments):
         ]
 
     async def parse_arguments(self):
-        if len(self.command_line) > 0:
-            if self.command_line[0] == '{':
-                temp_json = json.loads(self.command_line)
-                if "host" in temp_json:
-                    self.add_arg("path", temp_json["path"] + "/" + temp_json["file"])
-                    self.add_arg("file_browser", True, type=ParameterType.Boolean)
-                else:
-                    self.add_arg("path", temp_json["path"])
+    if len(self.command_line) > 0:
+        if self.command_line[0] == '{':
+            temp_json = json.loads(self.command_line)
+            if "host" in temp_json:
+                self.add_arg("path", temp_json.get("path", ".") + "/" + temp_json.get("file", ""))
+                self.add_arg("file_browser", True, type=ParameterType.Boolean)
             else:
-                self.add_arg("path", self.command_line)
+                self.add_arg("path", temp_json.get("path", "."))
         else:
-            self.add_arg("path", ".")
+            self.add_arg("path", self.command_line)
+    else:
+        self.add_arg("path", ".")
+
 
 class LsCommand(CommandBase):
     cmd = "ls"
